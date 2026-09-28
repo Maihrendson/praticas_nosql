@@ -1,0 +1,84 @@
+-- 1. Strings (Manipulação Básica de Chaves)
+-- Exercício 01: Crie uma chave sistema:nome com o valor "DataPlatform" e recupere o valor salvo.
+SET sistema:nome "DataPlatform"
+GET sistema:nome
+
+-- Exercício 02: Grave três variáveis de ambiente no mesmo comando: env:db=postgres, env:cache=redis e env:queue=rabbitmq. Em seguida, busque apenas env:db e env:cache.
+MSET env:db "postgres" env:cache "redis" env:queue "rabbitmq"
+MGET env:db env:cache
+
+-- Exercício 03: Defina um token de sessão sessao:usuario:101 com o valor "xyz123" que expire automaticamente em 30 segundos. Em seguida, verifique quanto tempo resta antes da expiração.
+SETEX sessao:usuario:101 30 "xyz123"
+TTL sessao:usuario:101
+
+-- Exercício 04: Crie um contador de acessos para a página principal pageviews:home. Incremente-o em 1 unidade, depois em mais 5 unidades, e por fim decremente 2 unidades.
+INCR pageviews:home
+INCRBY pageviews:home 5
+DECRBY pageviews:home 2
+
+-- 2. Hashes (Objetos e Dicionários)
+-- Exercício 05: Crie um perfil de usuário usuario:201 contendo os campos nome ("Carlos"), email ("carlos@email.com") e nivel ("admin").
+HSET usuario:201 nome "Carlos" email "carlos@email.com" nivel "admin"
+
+-- Exercício 06: Recupere apenas o campo email do usuario:201. Em seguida, recupere todos os campos e valores armazenados para esse usuário.
+HGET usuario:201 email
+HGETALL usuario:201
+
+-- Exercício 07: No mesmo usuario:201, incremente um novo campo tentativas_login em 1. Em seguida, liste apenas os nomes de todas as chaves (campos) presentes nesse hash.
+HINCRBY usuario:201 tentativas_login 1
+HKEYS usuario:201
+
+-- 3. Lists (Filas e Pilhas)
+-- Exercício 08: Crie uma fila de tarefas fila:email. Adicione no final da fila os itens "email_1", "email_2" e "email_3".
+RPUSH fila:email "email_1" "email_2" "email_3"
+
+-- Exercício 09: Remova e retorne o primeiro elemento da fila fila:email (simulando um consumidor FIFO).
+LPOP fila:email
+
+-- Exercício 10: Liste todos os elementos restantes na fila fila:email sem removê-los.
+LRANGE fila:email 0 -1
+
+-- 4. Sets (Conjuntos Não Ordenados e Sem Duplicatas)
+-- Exercício 11: Crie um conjunto tags:post:1 e adicione as tags "dados", "redis", "nosql" e novamente "redis". Verifique quantos elementos existem no conjunto.
+SADD tags:post:1 "dados" "redis" "nosql" "redis"
+SCARD tags:post:1
+
+-- Exercício 12: Crie um segundo conjunto tags:post:2 com as tags "redis", "python" e "backend". Execute o comando para encontrar as tags que aparecem em ambos os posts (interseção).
+SADD tags:post:2 "redis" "python" "backend"
+SINTER tags:post:1 tags:post:2
+
+-- Exercício 13: Verifique se a tag "python" pertence ao conjunto tags:post:1.
+SISMEMBER tags:post:1 "python"
+
+-- 5. Sorted Sets (Conjuntos Ordenados por Score)
+-- Exercício 14: Crie um leaderboard de jogo placar:game inserindo: "alice" (score 1500), "bob" (score 2200) e "carol" (score 1800).
+ZADD placar:game 1500 "alice" 2200 "bob" 1800 "carol"
+
+-- Exercício 15: Liste o ranking completo do placar:game em ordem decrescente (do maior score para o menor), incluindo os valores dos scores na exibição.
+ZREVRANGE placar:game 0 -1 WITHSCORES
+
+-- Exercício 16: Aumente a pontuação de "alice" em 800 pontos e verifique a sua nova posição no ranking.
+ZINCRBY placar:game 800 "alice"
+ZREVRANK placar:game "alice"
+
+-- 6. Pub/Sub, Transações e Administração
+-- Exercício 17 (Pub/Sub): No terminal 1, inscreva-se no canal notificacoes. No terminal 2, publique a mensagem "Novo relatório disponível".
+-- (No Terminal 1)
+SUBSCRIBE notificacoes
+-- (No Terminal 2)
+PUBLISH notificacoes "Novo relatorio disponivel"
+
+-- Exercício 18 (Transações): Inicie um bloco de transação para transferir R$ 50 da conta:A para a conta:B atomicamente.
+MULTI
+DECRBY conta:A 50
+INCRBY conta:B 50
+EXEC
+
+-- Exercício 19 (Gerenciamento de Chaves): Verifique se a chave sistema:nome existe no banco. Se existir, altere o nome da chave para sistema:app e depois remova-a.
+EXISTS sistema:nome
+RENAME sistema:nome sistema:app
+DEL sistema:app
+
+-- Exercício 20 (Inspeção do Servidor): Execute um comando para visualizar informações gerais e estatísticas de memória do servidor Redis. Em seguida, limpe apenas os dados do banco de dados atual.
+INFO memory
+FLUSHDB

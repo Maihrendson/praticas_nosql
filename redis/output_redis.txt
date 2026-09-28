@@ -1,0 +1,32 @@
+Arquivo 'lista01_redis_comandos.txt' gerado com sucesso para entrega!
+
+--- 1. STRINGS ---
+Ex 01 - GET sistema:nome -> DataPlatform
+Ex 02 - MGET -> ['postgres', 'redis']
+Ex 03 - TTL sessao:usuario:101 -> 30 segundos restantes
+Ex 04 - Contador pageviews:home -> 4
+
+--- 2. HASHES ---
+Ex 06 - GET email -> carlos@email.com
+Ex 06 - HGETALL -> {'nome': 'Carlos', 'email': 'carlos@email.com', 'nivel': 'admin'}
+Ex 07 - HKEYS -> ['nome', 'email', 'nivel', 'tentativas_login']
+
+--- 3. LISTS ---
+Ex 09 - LPOP -> Removido: email_1
+Ex 10 - LRANGE -> Restantes: ['email_2', 'email_3']
+
+--- 4. SETS ---
+Ex 11 - SCARD tags:post:1 -> 3 elementos
+Ex 12 - Interseção SINTER -> {'redis'}
+Ex 13 - 'python' pertence a tags:post:1? -> 0
+
+--- 5. SORTED SETS ---
+Ex 15 - Ranking Completo -> [('bob', 2200.0), ('carol', 1800.0), ('alice', 1500.0)]
+Ex 16 - Nova posição da Alice (ZREVRANK) -> 0
+
+--- 6. PUB/SUB, TRANSAÇÕES E ADMINISTRAÇÃO ---
+Ex 17 - Terminal 1 (Recebido): Novo relatorio disponivel
+Ex 18 - Transação finalizada. Saldo Conta B: 150
+Ex 19 - Chave renomeada e deletada com sucesso.
+Ex 20 - Uso de memória atual (human readable): 2.17M
+Ex 20 - Banco limpo com FLUSHDB.

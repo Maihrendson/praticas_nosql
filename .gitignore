@@ -1,0 +1,40 @@
+# Ambientes virtuais
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache e artefatos
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Arquivos de ambiente
+.env
+.env.*
+
+# Streamlit / dashboards
+.streamlit/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Logs e temporários
+*.log
+*.tmp
+*.temp
+
+# IDEs e editores
+.vscode/
+.idea/
+
+# Dependências instaladas localmente
+pip-wheel-metadata/
+
+# Database local, se existir
+*.sqlite3
